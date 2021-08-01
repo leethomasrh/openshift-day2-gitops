@@ -5,8 +5,8 @@ metadata:
   namespace: default
 spec:
   containers:
-    - $patch: replace
-    - name: nonprod-container
+    - name: base-container
       ports:
         - $patch: replace
         - containerPort: 8081
+        - containerPort: 8082
