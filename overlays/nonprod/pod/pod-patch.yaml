@@ -7,4 +7,5 @@ spec:
   containers:
     - name: base-container
       ports:
+        - $patch: replace
         - containerPort: 8081
