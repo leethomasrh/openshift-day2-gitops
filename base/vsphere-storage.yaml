@@ -3,7 +3,7 @@ apiVersion: storage.k8s.io/v1
 metadata:
   annotations:
     description: base-description
-  name: base-name
+  name: vsphere-storage
 parameters:
   datastore: base-datastore
   diskformat: thin
