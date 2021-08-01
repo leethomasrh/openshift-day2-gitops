@@ -5,4 +5,4 @@ metadata:
   namespace: default
 spec:
   containers:
-    - name: sandbox-container
+    - name: base-container
