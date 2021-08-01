@@ -6,3 +6,5 @@ metadata:
 spec:
   containers:
     - name: base-container
+      ports:
+        - containerPort: 8081
