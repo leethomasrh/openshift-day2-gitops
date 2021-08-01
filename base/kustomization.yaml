@@ -1,11 +1,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- chrony.conf.j2
 - pod.yaml
-configMapGenerator:
-- name: cluster-config
-  literals:
-    - rhcos_ntp_servers
-      - 2.pool.ntp.org
-      - 3.pool.ntp.org
