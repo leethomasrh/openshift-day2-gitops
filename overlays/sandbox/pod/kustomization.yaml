@@ -1,6 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-bases:
-- ../../base
+resources:
+  - ../../../base/pod.yaml
 patchesStrategicMerge:
-- cluster-config.yaml
+  - pod-patch.yaml

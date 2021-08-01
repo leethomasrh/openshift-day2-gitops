@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nonprod-pod
+  namespace: default
+spec:
+  containers:
+    - name: nonprod-container
