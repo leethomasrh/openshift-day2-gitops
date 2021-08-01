@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - pod.yaml
 - default-project-template.yaml
+- vsphere-storage.yaml
