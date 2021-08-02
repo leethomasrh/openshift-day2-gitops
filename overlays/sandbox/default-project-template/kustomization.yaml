@@ -1,6 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
-  - ../../../base
+  - ../../../base/default-project-template
 patchesStrategicMerge:
   - default-project-template-patch.yaml

@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: base-pod
-  namespace: default
-spec:
-  containers:
-    - name: base-container
