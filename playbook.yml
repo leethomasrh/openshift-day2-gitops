@@ -19,27 +19,7 @@
   vars_files:
     - "{{ playbook_dir }}/vars/{{ cluster_name }}/vars.yml"
     - "{{ playbook_dir }}/vars/{{ cluster_name }}/vault.yml"
-  vars_prompt:
-  - name: playbook_continue
-    prompt: "You are performing a(n)
-               {% if teardown | default(false)  %}\e[91mteardown\e[0m
-               {% elif apply | default(false) %}\e[35mapply\e[0m
-               {% elif print | default(false) %}\e[32mprint\e[0m
-               {% elif upgrade | default(false) %}\e[35mupgrade\e[0m
-               {% else %}\e[97mdefault\e[0m{% endif %}
-             operation.\n
-             Tags: \e[96m{{ ansible_run_tags | join(', ') }}\e[0m\n
-             Cluster: \e[94m{{ cluster_name | default('') }}\e[0m\n
-             \n
-             Continue (yes/no)?"
   tasks:
-  # End play if "yes" was not received during continue prompt
-  # This helps prevent us from doing something stupid somewhere we don't expect
-  - meta: end_play
-    when: not (playbook_continue | bool | default(false))
-    tags:
-    - always
-
   - block:
       - name: Login
         k8s_auth:
