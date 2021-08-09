@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chrony-config
+data:
+  FIRST_NTP_SERVER: 0.pool.ntp.org
+  SECOND_NTP_SERVER: 1.pool.ntp.org
+

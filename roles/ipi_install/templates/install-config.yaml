@@ -1,0 +1,53 @@
+apiVersion: v1
+baseDomain: {{ openshift_base_domain }}
+compute:
+- architecture: amd64
+  hyperthreading: Enabled
+  name: worker
+  platform:
+    vsphere:
+      cpus: 8
+      coresPerSocket: 2
+      memoryMB: 16384
+      osDisk:
+        diskSizeGB: 100
+  replicas: 3
+controlPlane:
+  architecture: amd64
+  hyperthreading: Enabled
+  name: master
+  platform:
+    vsphere:
+      cpus: 8
+      coresPerSocket: 2
+      memoryMB: 16384
+      osDisk:
+        diskSizeGB: 100
+  replicas: 3
+metadata:
+  creationTimestamp: null
+  name: {{ cluster_name }}
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 10.0.0.0/16
+  networkType: OpenShiftSDN
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  vsphere:
+    apiVIP: {{ api_vip }}
+    cluster: {{ vsphere_cluster }}
+    datacenter: {{ vsphere_datacenter }}
+    defaultDatastore: {{ vsphere_datastore }}
+    ingressVIP: {{ ingress_vip }}
+    network: {{ vsphere_network_name }}
+    password: 98rZaF*IQ*ij5R5%!k7r
+    username: {{ vcenter_username }}
+    vCenter: {{ vcenter_server }}
+publish: External
+pullSecret: '{"auths":{"cloud.openshift.com":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K3Jobmdwc2xldGhvbWFzMWkzaXYyZjRiZGt1ZG45Y3IzOGNvOWd3aDF3OkxGWUYxVEFXWERDT0o3UDFJS1hQWUoxU1pDNktOMEEzU0ZXUUo0MlRUWjROQk5ONzBWNERSUzdUSVpKUFg4VkM=","email":"lethomas@redhat.com"},"quay.io":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K3Jobmdwc2xldGhvbWFzMWkzaXYyZjRiZGt1ZG45Y3IzOGNvOWd3aDF3OkxGWUYxVEFXWERDT0o3UDFJS1hQWUoxU1pDNktOMEEzU0ZXUUo0MlRUWjROQk5ONzBWNERSUzdUSVpKUFg4VkM=","email":"lethomas@redhat.com"},"registry.connect.redhat.com":{"auth":"NTIzODAwODd8dWhjLTFJM0l2MmY0YkRrdWROOWNSMzhDbzlnV2gxVzpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSmpaR1ZqTXpOall6YzBNRGswTURnd09UUmxZekkxTUdZMFlqVXhOMlUyTkNKOS52b28wVzBxamduRV9aMkhCcWpZSVJ6aTI1Y3RTOE55clI2SjdvNlF6QTRDRlJHZVVQQXVYX2thbWUtY3pXRWZ5VUVObldpTnA1elNiMm5HRnpFclUzemhCcncwXzRYQnd1SDYwV1JlMW9VSFZGUXdPaWJQbnlnMlpoT3BaT1E1cmRQRXYyQU1vTllWNDlBNWlfaTJZcWtiSWRXTEFSQjJQM0M5YmxZUl9sQlBBSnVSQW9jRnlzSFRNOVZ2MXJWY1hEWUJWblZ3dVhOWDlBY1hGN28wbzExaXNIcEt5T3FDUW5sLUJYc2ZwcGR3MFpVa2wtMHJtT1pzWHc2aGNjbTNTT0g1MUhHS1hENEU3M1dONmZzNlVrZi1ub2pta3ZQUXZxdzlPWkczWElvdXh0VW1YTUQ3MW8wdVpIdWt4d3lVUjJPZVRBUGFXUVdWdi1pRmZ0NE8ySDVGWlpzbVZxTUIyN0NLeFpzaEJDQ2RwR2tBc2hSQzYyc0phMkE5N3BlNUMta21nNFkxMGdlMXAyaGJTRHZWc1RZdTU4TXlVX2J5YUwzNHR5Skw5UndkQUVrRXM5Tk9iSmRVMWU0REg5WXdiREtHMGdLMEY1VXlFa1duTzhzYkpQWTVnQ2dwcGtNaEZMTG1jZmg5LThmWGZPdXdJbDh0dkcxd25kM3ZOY2dSWHBqVVE5aGM0Y1lWZHBLdnBHVDByVWQzZjgyTjdIUWh4VlRVbTFMNW1EQ1dfSEFDWTlYdjVPdExscElGUFJraVd1NVhPcVNwMHE1TTdSMUZpTVFoT1hZNVB0RXdrcWs0Zndteno2LVZFMkw4N3ktRktIZDFJVnNRZXZ6eEE4TE1jX1h5dEdDVnY3eGk0Wk9DQUhBTDdCYmJhRzJ1WXhRSGpqclJJUkRDMEJ2NA==","email":"lethomas@redhat.com"},"registry.redhat.io":{"auth":"NTIzODAwODd8dWhjLTFJM0l2MmY0YkRrdWROOWNSMzhDbzlnV2gxVzpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSmpaR1ZqTXpOall6YzBNRGswTURnd09UUmxZekkxTUdZMFlqVXhOMlUyTkNKOS52b28wVzBxamduRV9aMkhCcWpZSVJ6aTI1Y3RTOE55clI2SjdvNlF6QTRDRlJHZVVQQXVYX2thbWUtY3pXRWZ5VUVObldpTnA1elNiMm5HRnpFclUzemhCcncwXzRYQnd1SDYwV1JlMW9VSFZGUXdPaWJQbnlnMlpoT3BaT1E1cmRQRXYyQU1vTllWNDlBNWlfaTJZcWtiSWRXTEFSQjJQM0M5YmxZUl9sQlBBSnVSQW9jRnlzSFRNOVZ2MXJWY1hEWUJWblZ3dVhOWDlBY1hGN28wbzExaXNIcEt5T3FDUW5sLUJYc2ZwcGR3MFpVa2wtMHJtT1pzWHc2aGNjbTNTT0g1MUhHS1hENEU3M1dONmZzNlVrZi1ub2pta3ZQUXZxdzlPWkczWElvdXh0VW1YTUQ3MW8wdVpIdWt4d3lVUjJPZVRBUGFXUVdWdi1pRmZ0NE8ySDVGWlpzbVZxTUIyN0NLeFpzaEJDQ2RwR2tBc2hSQzYyc0phMkE5N3BlNUMta21nNFkxMGdlMXAyaGJTRHZWc1RZdTU4TXlVX2J5YUwzNHR5Skw5UndkQUVrRXM5Tk9iSmRVMWU0REg5WXdiREtHMGdLMEY1VXlFa1duTzhzYkpQWTVnQ2dwcGtNaEZMTG1jZmg5LThmWGZPdXdJbDh0dkcxd25kM3ZOY2dSWHBqVVE5aGM0Y1lWZHBLdnBHVDByVWQzZjgyTjdIUWh4VlRVbTFMNW1EQ1dfSEFDWTlYdjVPdExscElGUFJraVd1NVhPcVNwMHE1TTdSMUZpTVFoT1hZNVB0RXdrcWs0Zndteno2LVZFMkw4N3ktRktIZDFJVnNRZXZ6eEE4TE1jX1h5dEdDVnY3eGk0Wk9DQUhBTDdCYmJhRzJ1WXhRSGpqclJJUkRDMEJ2NA==","email":"lethomas@redhat.com"}}}'
+sshKey: |
+  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCuAuCagQws+pRPcDLt+xW3ZmEhZo0FlThqgDe0AhDxQ6jGsv1k8g6Sa+XkvjltWVb6elv1szwXPG2s6v3jpRWws1J0K0oTJRkVnCJqwL6FKSrT6IwlsvtJFC2IKjdUmuOyI97Crvjn/lJAPIMK22mgr+EA4h/gU10dzmXQmGZ4CG+4xLegH1HLO9mIEp/hVUjjLbzHkfhINvL67929tTveyriAiREPDKi30VwLa0Wp2tg+NBj+gk01jiVbAb1JhLfPA0ctN/x3VL03GW8wS6/Y6sFQPrlD1cO+mK0qduhjqBoYK/N6McXYYLSM8LRhMy5gXutuFLX9dba2xnd/a/8VAgb/ERREaih3OCnrBsXbYnJSxotmsne2cJAj2sVLBVB1kyG6xQP7RK4xOCyHTJLhwMlk3NhHYul2oZyb1G6K91g97Fe4BlTjRybd8swjU1HkeyM1lqOli0v7CvtRdzFBGXT7p5saCbLQAPRk5iR05nqkIDHiekdQQSFlwYRtunSNuQJYXXYDcL5j3fWzToGe0cXo95Yjn8CQj6Q4PowmMiMYdaDLhALnYdRkhdIHnMVc1EKH4S2UtAHsZy7lYVxjgnhPHEl3zgKnAsFUgMZzxVTL6GEie+WixDmycZ8v/YqtWR76UjuagpXFAudwcBS+yD81Ypvs5TKlAgW9ilpZlQ== lee@bastion

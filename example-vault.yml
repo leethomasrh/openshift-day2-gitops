@@ -1,0 +1,8 @@
+# DO NOT ADD to GIT if values have been populated in this file and it is not encrypted
+# THIS FILE IS FOR EXAMPLE ONLY
+
+#kubeadmin password - change to user password once authentication is configured
+pass: <DO NOT FILL IN>
+
+ldap_bind_password: <DO NOT FILL IN>
+

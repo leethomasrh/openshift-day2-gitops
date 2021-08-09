@@ -12,12 +12,18 @@ num_delay: 30
 #vSphere variables
 #you can get these values from oc describe machinesets {{ openshift_unique_cluster_name }}-worker -n openshift-machine-api
 vsphere_creds_secret: vsphere-cloud-credentials 
-vsphere_network_name: test|Dev|Green
-vsphere_datacenter: datacenter
-vsphere_datastore: datastore
+vsphere_network_name: OKD
+vsphere_datacenter: Datacenter
+vsphere_datastore: 10k_raid
+vsphere_cluster: home
 vsphere_folder: /folder
 vsphere_resourcepool: /Resources
-vsphere_server: server.com
+vcenter_server: vcsa.home.lab
+vcenter_username: administrator@home.lab
+
+#IPI install variables
+api_vip: 10.0.99.201
+ingress_vip: 10.0.99.202
 
 #vSphere storage class NOTE: this role uses the vsphere_datastore variable as well
 vsphere_storageClass_name: vsphere-storage

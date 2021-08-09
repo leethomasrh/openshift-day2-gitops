@@ -3,4 +3,4 @@ kind: Kustomization
 bases:
 - ../../base/chronyd
 patchesStrategicMerge:
-- cluster-config.yaml
+- chrony-config.yaml
