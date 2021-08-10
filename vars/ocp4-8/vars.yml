@@ -23,7 +23,7 @@ vcenter_username: administrator@home.lab
 vault_vcenter_admin_pass: "{{ vcenter_admin_pass }}"
 
 #IPI install variables
-install_path: /tmp
+install_path: /home/lee/ocp4-8_2
 api_vip: 10.0.99.203
 ingress_vip: 10.0.99.204
 vault_pull_secret: "'{{ pull_secret }}'"
