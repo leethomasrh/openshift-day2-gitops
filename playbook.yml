@@ -21,34 +21,41 @@
     - "{{ playbook_dir }}/vars/{{ cluster_name }}/vault.yml"
   tasks:
   - block:
-      - name: Login
-        k8s_auth:
-          username: kubeadmin
-          password: "{{ pass }}"
-          validate_certs: no
-        register: k8s_auth_results
-        tags:
-          - always
+#      - name: Login
+#        k8s_auth:
+#          username: kubeadmin
+#          password: "{{ pass }}"
+#          validate_certs: no
+#        register: k8s_auth_results
+#        tags:
+#          - always
+#
+#      - name: get unique cluster identifier
+#        shell: >-
+#          oc get machinesets
+#          -n openshift-machine-api
+#          --token {{ k8s_auth_results.k8s_auth.api_key }}
+#          --insecure-skip-tls-verify=true
+#          --server=https://api.{{ cluster_name }}.{{ openshift_base_domain }}:6443
+#          | grep worker | cut -d- -f1-3
+#        register: cluster_id
+#        tags:
+#          - always
+#        when: k8s_auth_results.k8s_auth.api_key is defined
+#
+#      - name: set unique_cluster_id fact
+#        set_fact: 
+#          openshift_unique_cluster_name: "{{ cluster_id.stdout }}"
+#        tags:
+#          - always
+#        when: k8s_auth_results.k8s_auth.api_key is defined
 
-      - name: get unique cluster identifier
-        shell: >-
-          oc get machinesets
-          -n openshift-machine-api
-          --token {{ k8s_auth_results.k8s_auth.api_key }}
-          --insecure-skip-tls-verify=true
-          --server=https://api.{{ cluster_name }}.{{ openshift_base_domain }}:6443
-          | grep worker | cut -d- -f1-3
-        register: cluster_id
+      - name: ipi install
+        import_role:
+          name: ipi_install
         tags:
-          - always
-        when: k8s_auth_results.k8s_auth.api_key is defined
-
-      - name: set unique_cluster_id fact
-        set_fact: 
-          openshift_unique_cluster_name: "{{ cluster_id.stdout }}"
-        tags:
-          - always
-        when: k8s_auth_results.k8s_auth.api_key is defined
+          - never
+          - ipi_install
 
       - name: configure cert_replace
         import_role:

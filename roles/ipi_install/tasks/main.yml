@@ -1,6 +1,5 @@
 - name: Create install-config.yml
   template:
-    src: {{ lookup('template', 'install-config.j2' }}
-    dest: {{ install-path }}/install-config.yaml
-    backup: true
+    src: install-config.j2
+    dest: "{{ install_path }}/install-config.yaml"
     mode: 0666
