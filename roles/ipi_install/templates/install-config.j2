@@ -1,0 +1,53 @@
+apiVersion: v1
+baseDomain: {{ openshift_base_domain }}
+compute:
+- architecture: {{ architecture }}
+  hyperthreading: {{ hyperthreading }}
+  name: worker
+  platform:
+    vsphere:
+      cpus: {{ worker_cpus }}
+      coresPerSocket: {{ worker_cores_per_socket }}
+      memoryMB: {{ worker_memory }}
+      osDisk:
+        diskSizeGB: {{ worker_disk }}
+  replicas: {{ worker_replicas }}
+controlPlane:
+  architecture: {{ architecture }}
+  hyperthreading: {{ hyperthreading }}
+  name: master
+  platform:
+    vsphere:
+      cpus: {{ master_cpus }}
+      coresPerSocket: {{ master_cores_per_socket }}
+      memoryMB: {{ master_memory }}
+      osDisk:
+        diskSizeGB: {{ master_disk }}
+  replicas: {{ master_replicas }}
+metadata:
+  creationTimestamp: null
+  name: {{ cluster_name }}
+networking:
+  clusterNetwork:
+  - cidr: {{ cluster_network_cidr }}
+    hostPrefix: {{ cluster_network_prefix }}
+  machineNetwork:
+  - cidr: {{ machine_network_cidr }}
+  networkType: {{ networkType }}
+  serviceNetwork:
+  - {{ service_network_cidr }}
+platform:
+  vsphere:
+    apiVIP: {{ api_vip }}
+    cluster: {{ vsphere_cluster }}
+    datacenter: {{ vsphere_datacenter }}
+    defaultDatastore: {{ vsphere_datastore }}
+    ingressVIP: {{ ingress_vip }}
+    network: {{ vsphere_network_name }}
+    password: {{ vault_vcenter_admin_pass }}
+    username: {{ vcenter_username }}
+    vCenter: {{ vcenter_server }}
+publish: External
+pullSecret: {{ vault_pull_secret }}
+sshKey: |
+  {{ vault_ssh_key }}
