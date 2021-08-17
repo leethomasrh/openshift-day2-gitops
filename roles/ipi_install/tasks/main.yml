@@ -81,14 +81,19 @@
 #- name: encrypt kubeadmin vault
 #  command:
 #     cmd: ansible-vault encrypt {{ playbook_dir }}/vars/{{ cluster_name }}/vault.yml
-
-- name: get kubeadmin password
-  set_fact:
-    kube_pass: "{{ lookup('file', '{{ cluster_path }}/{{ install_path }}/auth/kubeadmin-password') }}"
-
-- name: debug print pass
-  debug:
-    var: kube_pass
- 
-- name: login to the cluster
-  import_tasks: "{{ playbook_dir }}/roles/login/tasks/main.yml"
+#
+#- name: add kubeadmin password to vars
+#  lineinfile:
+#    path: "{{ playbook_dir }}/vars/{{ cluster_name }}/vars.yml"
+#    line: "kube_pass: {{ lookup('file', '{{ cluster_path }}/{{ install_path }}/auth/kubeadmin-password') }}"
+#
+#- name: get kubeadmin password
+#  set_fact:
+#    kube_pass: "{{ lookup('file', '{{ cluster_path }}/{{ install_path }}/auth/kubeadmin-password') }}"
+#
+#- name: debug print pass
+#  debug:
+#    var: kube_pass
+# 
+#- name: login to the cluster
+#  import_tasks: "{{ playbook_dir }}/roles/login/tasks/main.yml"
