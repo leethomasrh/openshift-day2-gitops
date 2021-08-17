@@ -23,9 +23,14 @@ vcenter_username: administrator@home.lab
 vault_vcenter_admin_pass: "{{ vcenter_admin_pass }}"
 
 #IPI install variables
-install_path: /home/lee/ocp4-8_2
+cluster_path: /home/lee/ocp4-8_2
+install_path: install-dir
 api_vip: 10.0.99.203
 ingress_vip: 10.0.99.204
+openshift_install_filename: openshift-install-linux.tar.gz
+openshift_client_filename: openshift-client-linux.tar.gz
+openshift_install_version: stable
+openshift_download_url: http://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ openshift_install_version }}/
 vault_pull_secret: "'{{ pull_secret }}'"
 vault_ssh_key: "{{ ssh_key }}"
 architecture: amd64
@@ -70,7 +75,11 @@ infranodes_template: "{{ openshift_unique_cluster_name }}-rhcos"
 
 #NTP
 rhcos_ntp_servers:
-- test-ntp.com
+- 0.us.pool.ntp.org
+- 1.us.pool.ntp.org
+- 2.us.pool.ntp.org
+- 3.us.pool.ntp.org
+
 
 #LDAP
 #Note: The LDAP role does not create role bindings so in order to access the cluster the RBAC role will need to be run as well.

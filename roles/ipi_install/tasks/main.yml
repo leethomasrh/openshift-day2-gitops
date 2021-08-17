@@ -18,14 +18,77 @@
     msg: "INGRESS VIP not found in DNS"
   when: "ingress_vip not in ingress_dns_result.msg"
 
-- name: create install dir
-  file:
-    path: "{{ install_path }}/install-dir"
-    state: directory
-    recurse: true
+#- name: create install dir
+#  file:
+#    path: "{{ cluster_path }}/{{ install_path }}"
+#    state: directory
+#    recurse: true
+#
+#- name: Download openshift-install
+#  unarchive:
+#    src: "{{ openshift_download_url }}/{{ openshift_install_filename }}"
+#    dest: "{{ cluster_path }}"
+#    remote_src: true
+#    mode: 0770
+#
+#- name: Download openshift cli
+#  unarchive:
+#    src: "{{ openshift_download_url }}/{{ openshift_client_filename }}"
+#    dest: "{{ cluster_path }}"
+#    remote_src: true
+#    mode: 0770
+#
+#- name: Create install-config.yml
+#  template:
+#    src: install-config.j2
+#    dest: "{{ cluster_path }}/{{ install_path }}/install-config.yaml"
+#    mode: 0660
+#
+#- name: create manifests
+#  command:
+#    cmd: "{{ cluster_path }}/openshift-install create manifests --dir={{ cluster_path }}/{{ install_path }}"
+#
+#- name: copy chrony template to manifests dir
+#  template:
+#    src: machineconfig.j2
+#    dest: "{{ cluster_path }}/{{ install_path }}/openshift/99-{{ item }}-chrony.yaml"
+#    mode: 0640
+#  when: item != "infra"
+#  loop: "{{ machine_role }}"
+#
+#- name: create chrony manifest
+#  lineinfile:
+#    path: "{{ cluster_path }}/{{ install_path }}/openshift/99-{{ item }}-chrony.yaml"
+#    insertafter: "- contents:"
+#    line: '          source: data:text/plain;charset=utf-8;base64,{{ lookup("template", "chrony.conf.j2") | b64encode }}'
+#  when: item != "infra"
+#  loop: "{{ machine_role }}"
+#
+#- name: run ipi install
+#  command:
+#    cmd: "{{ cluster_path }}/openshift-install create cluster --dir={{ cluster_path }}/{{ install_path }}"
+ 
+#- name: decrypt kubeadmin vault
+#  command:
+#     cmd: ansible-vault decrypt {{ playbook_dir }}/vars/{{ cluster_name }}/vault.yml
+#
+#- name: add kubeadmin password to vault
+#  lineinfile:
+#    path: "{{ playbook_dir }}/vars/{{ cluster_name }}/vault.yml"
+#    line: "pass: {{ lookup('file', '{{ cluster_path }}/{{ install_path }}/auth/kubeadmin-password') }}"
+#    insertafter: 'vcenter_admin_pass'
+#
+#- name: encrypt kubeadmin vault
+#  command:
+#     cmd: ansible-vault encrypt {{ playbook_dir }}/vars/{{ cluster_name }}/vault.yml
 
-- name: Create install-config.yml
-  template:
-    src: install-config.j2
-    dest: "{{ install_path }}/install-dir/install-config.yaml"
-    mode: 0666
+- name: get kubeadmin password
+  set_fact:
+    kube_pass: "{{ lookup('file', '{{ cluster_path }}/{{ install_path }}/auth/kubeadmin-password') }}"
+
+- name: debug print pass
+  debug:
+    var: kube_pass
+ 
+- name: login to the cluster
+  import_tasks: "{{ playbook_dir }}/roles/login/tasks/main.yml"

@@ -1,0 +1,6 @@
+- name: Login
+  k8s_auth:
+    username: kubeadmin
+    password: "{{ kube_pass }}"
+    validate_certs: no
+  register: k8s_auth_results
