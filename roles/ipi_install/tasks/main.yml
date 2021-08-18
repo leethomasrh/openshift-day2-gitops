@@ -70,7 +70,7 @@
  
 - name: decrypt kubeadmin vault
   command:
-     cmd: ansible-vault decrypt {{ playbook_dir }}/vars/{{ cluster_name }}/vault.yml --vault-password-file {{ playbook_dir }}/vault-pass.txt
+     cmd: ansible-vault decrypt {{ playbook_dir }}/vars/{{ cluster_name }}/vault.yml --vault-password-file {{ vault_pass_file }}
 
 - name: ensure kubeadmin password isn't in vault
   lineinfile:
@@ -87,4 +87,4 @@
 
 - name: encrypt kubeadmin vault
   command:
-     cmd: ansible-vault encrypt {{ playbook_dir }}/vars/{{ cluster_name }}/vault.yml --vault-password-file {{ playbook_dir }}/vault-pass.txt
+     cmd: ansible-vault encrypt {{ playbook_dir }}/vars/{{ cluster_name }}/vault.yml --vault-password-file {{ vault_pass_file }}

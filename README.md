@@ -2,7 +2,8 @@
 
 This playbook can be used to perform an ipi installation and configure day2 tasks via the openshift-gitops operator.  
 It is possible to use these playbooks on many clusters by creating a {repo folder}/vars/{cluster_name} directory to
-contain the vars.yml and vault.yml for each cluster.  
+contain the vars.yml and vault.yml for each cluster.  The playbook knows which cluster information to use because 
+cluster_name used in the vars folder structure is passed to the playbook via the -e cluster_name={cluster_name} option.  
 
 ## GENERAL
 These playbooks use the following python3 modules.  They need to be installed prior to running the automation.
@@ -41,7 +42,7 @@ or by running the following command if you already have a cluster built:
   
 	oc get machines <master machine name> -o yaml
 
-Recommend running the openshift-install create install-config --dir=<installation dir> command prior to running the ipi install role.
+Recommend running the openshift-install create install-config --dir={installation dir} command prior to running the ipi install role.
 This will allow you to ensure all the options presented during the ipi install are selected for the build you wish to do and will 
 provide the information you need to fill in the variables in the {repo folder}/vars/{cluster_name}/vars.yml file.
 If you select an option that isn't in the {repo folder}/roles/ipi_install/templates/install-config.j2 file you can add it 
