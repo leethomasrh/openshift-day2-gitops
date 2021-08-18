@@ -56,5 +56,6 @@ along with the cooresponding variable in the {repo folder}/vars/{cluster_name}/v
 	
 	Perform IPI install:
 	./playbook.yml --vault-password-file vault-pass.txt -e cluster_name={cluster_name} -t ipi_install
+
         Install Openshift Gitops operator
         ./playbook.yml --vault-password-file vault-pass.txt -e cluster_name={cluster_name} -t gitops_operator
