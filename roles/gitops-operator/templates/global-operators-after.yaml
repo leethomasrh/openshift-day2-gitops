@@ -1,0 +1,49 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    include.release.openshift.io/ibm-cloud-managed: "true"
+    include.release.openshift.io/self-managed-high-availability: "true"
+    include.release.openshift.io/single-node-developer: "true"
+    olm.providedAPIs: AppProject.v1alpha1.argoproj.io,Application.v1alpha1.argoproj.io,ApplicationSet.v1alpha1.argoproj.io,ArgoCD.v1alpha1.argoproj.io,GitopsService.v1alpha1.pipelines.openshift.io
+  creationTimestamp: "2021-08-12T19:46:38Z"
+  generation: 2
+  managedFields:
+  - apiVersion: operators.coreos.com/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:include.release.openshift.io/ibm-cloud-managed: {}
+          f:include.release.openshift.io/self-managed-high-availability: {}
+          f:include.release.openshift.io/single-node-developer: {}
+    manager: cluster-version-operator
+    operation: Update
+    time: "2021-08-12T19:46:38Z"
+  - apiVersion: operators.coreos.com/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:olm.providedAPIs: {}
+      f:spec: {}
+      f:status:
+        .: {}
+        f:lastUpdated: {}
+        f:namespaces:
+          .: {}
+          v:"": {}
+    manager: olm
+    operation: Update
+    time: "2021-08-17T14:57:44Z"
+  name: global-operators
+  namespace: openshift-operators
+  resourceVersion: "2584224"
+  uid: fbc9d84e-cbf9-419b-9380-42a28934829c
+spec: {}
+status:
+  lastUpdated: "2021-08-12T19:57:55Z"
+  namespaces:
+  - ""
+

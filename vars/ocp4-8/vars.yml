@@ -51,6 +51,11 @@ machine_network_cidr: 10.0.0.0/16
 service_network_cidr: 172.30.0.0/16
 networkType: OpenShiftSDN
 
+#Openshift Gitops Operator installation
+gitops_subscription_channel: stable
+gitops_approval_strategy: automatic
+gitops_starting_csv: openshift-gitops-operator.v1.2.0
+
 #vSphere storage class NOTE: this role uses the vsphere_datastore variable as well
 vsphere_storageClass_name: vsphere-storage
 vsphere_storageClass_reclaimPolicy: Retain
@@ -59,6 +64,7 @@ vsphere_storageClass_datastore: datastore
 
 #Infra Nodes
 #The infranodes_taints_key var is used by the mv_ingress_infra, logging, monitoring roles
+#gitops_approval_strategy: automatic
 infranodes_name: infra
 infranodes_node_selector: "node-role.kubernetes.io/infra: ''"
 infranodes_node_label: "node-role.kubernetes.io/infra: ''"

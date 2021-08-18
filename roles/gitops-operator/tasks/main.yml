@@ -1,0 +1,6 @@
+- name: Install Openshift Gitops Operator
+  k8s:
+    api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
+    state: present
+    resource_definition: "{{ lookup('template', 'gitops-subscription.yaml.j2') }}"
+    validate_certs: no
