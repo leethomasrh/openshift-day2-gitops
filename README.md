@@ -22,9 +22,10 @@ of each openshift cluster you want to administer using these playbooks.
 If you wish to create a vault-pass.txt file in the playbook directory that can be used to prevent prompts for the vault
 password when the playbook adds the kubeadmin password for the newly built cluster using the ipi_install role.
 
-**Do not commit an unencrypted vault.yml file to Github.**  The example-vault.yml file is just an example and should not be filled in.
+**Do not commit the vault.yml or vault-pass.txt files to Github.** 
 **A .gitignore file has been created to prevent any files with vault or vlt in the name from being commited to github.  Update this
-file if your naming convention differs.
+file if your naming convention differs.**
+The example-vault.yml file is just an example and should not be filled in.
 
 If a {repo folder}/vars/{cluster_name}/vault.yml doesn't exist create one with
 	
@@ -47,9 +48,9 @@ If you select an option that isn't in the {repo folder}/roles/ipi_install/templa
 along with the cooresponding variable in the {repo folder}/vars/{cluster_name}/vars.yml file.
 
 ### USAGE:
-** prompting for vault password (no vault-pass.txt file)
+** prompting for vault password (no vault-pass.txt file)**
 	./playbook.yml --ask-vault-pass -e cluster_name={cluster_name} -t {role name}
-** using the vault-pass.txt file 
+** using the vault-pass.txt file** 
 	./playbook.yml --vault-password-file vault-pass.txt -e cluster_name={cluster_name} -t {role name}
 
 **Example:**
@@ -57,5 +58,5 @@ along with the cooresponding variable in the {repo folder}/vars/{cluster_name}/v
 	Perform IPI install:
 	./playbook.yml --vault-password-file vault-pass.txt -e cluster_name={cluster_name} -t ipi_install
 
-        Install Openshift Gitops operator
-        ./playbook.yml --vault-password-file vault-pass.txt -e cluster_name={cluster_name} -t gitops_operator
+	Install Openshift Gitops operator
+	./playbook.yml --vault-password-file vault-pass.txt -e cluster_name={cluster_name} -t gitops_operator
