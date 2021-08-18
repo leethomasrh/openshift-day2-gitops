@@ -48,9 +48,9 @@ If you select an option that isn't in the {repo folder}/roles/ipi_install/templa
 along with the cooresponding variable in the {repo folder}/vars/{cluster_name}/vars.yml file.
 
 ### USAGE:
-** prompting for vault password (no vault-pass.txt file)**
+**prompting for vault password (no vault-pass.txt file)**
 	./playbook.yml --ask-vault-pass -e cluster_name={cluster_name} -t {role name}
-** using the vault-pass.txt file** 
+**using the vault-pass.txt file** 
 	./playbook.yml --vault-password-file vault-pass.txt -e cluster_name={cluster_name} -t {role name}
 
 **Example:**
