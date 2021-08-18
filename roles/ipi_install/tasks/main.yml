@@ -75,7 +75,7 @@
 - name: ensure kubeadmin password isn't in vault
   lineinfile:
     path: "{{ playbook_dir }}/vars/{{ cluster_name }}/vault.yml"
-    line: "kube_pass: {{ lookup('file', '{{ cluster_path }}/{{ install_path }}/auth/kubeadmin-password') }}"
+    regexp: "^kube_pass:" 
     state: absent
 
 - name: add kubeadmin password to vault

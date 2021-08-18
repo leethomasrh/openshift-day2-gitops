@@ -4,7 +4,7 @@ openshift_base_domain: home.lab
 ansible_python_interpreter: python
 num_retries: 30
 num_delay: 30
-vault_pass_file: "{{ playbook_dir }}/vault-pass.txt
+vault_pass_file: "{{ playbook_dir }}/vault-pass.txt"
 
 # Cluster operations namespace - used for ldap and object pruning
 operation_namespace: cluster-ops
