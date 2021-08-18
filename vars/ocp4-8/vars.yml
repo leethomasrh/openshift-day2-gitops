@@ -2,12 +2,11 @@
 cluster_name: ocp4-8
 openshift_base_domain: home.lab
 ansible_python_interpreter: python
-# Cluster operations namespace - used for ldap and object pruning
-operation_namespace: cluster-ops
-# Cluster name used for infra nodes and machine healthchecks
-#openshift_unique_cluster_name: "{{ cluster_name }}-{{ unique_cluster_id }}"
 num_retries: 30
 num_delay: 30
+
+# Cluster operations namespace - used for ldap and object pruning
+operation_namespace: cluster-ops
 
 #vSphere variables
 #you can get these values from oc describe machinesets {{ openshift_unique_cluster_name }}-worker -n openshift-machine-api
@@ -51,6 +50,21 @@ machine_network_cidr: 10.0.0.0/16
 service_network_cidr: 172.30.0.0/16
 networkType: OpenShiftSDN
 
+#Machine health checks - NOTE: healthchecks are not supported on Master nodes as of OCP 4.7
+health_check_maxunhealthy: 100%
+health_check_timeout: 300s
+machine_role: 
+- worker
+- infra
+- master
+
+#NTP
+rhcos_ntp_servers:
+- 0.us.pool.ntp.org
+- 1.us.pool.ntp.org
+- 2.us.pool.ntp.org
+- 3.us.pool.ntp.org
+ 
 #Openshift Gitops Operator installation
 gitops_subscription_channel: stable
 gitops_approval_strategy: automatic
@@ -78,14 +92,6 @@ infranodes_memory: 49152
 infranodes_cpu: 8
 infranodes_cores_per_socket: 1
 infranodes_template: "{{ openshift_unique_cluster_name }}-rhcos"
-
-#NTP
-rhcos_ntp_servers:
-- 0.us.pool.ntp.org
-- 1.us.pool.ntp.org
-- 2.us.pool.ntp.org
-- 3.us.pool.ntp.org
-
 
 #LDAP
 #Note: The LDAP role does not create role bindings so in order to access the cluster the RBAC role will need to be run as well.
@@ -183,7 +189,6 @@ ca_bundle_certs: #DO NOT ALTER
   key: ca-bundle.crt
   value: "{{ certFiles[2].caFile }}"
 
-
 #Logging
 logging_subscription_channel: 5.0
 logging_approval_strategy: manual
@@ -210,14 +215,6 @@ fluentd_limits:
 fluentd_requests:
   cpu: 100m
   memory: 512Mi
-
-#Machine health checks - NOTE: healthchecks are not supported on Master nodes as of OCP 4.7
-health_check_maxunhealthy: 100%
-health_check_timeout: 300s
-machine_role: 
-- worker
-- infra
-- master
 
 #etcd backups
 etcd_backup_namespace: "etcd-backups"

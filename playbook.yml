@@ -24,11 +24,13 @@
       - name: Login
         k8s_auth:
           username: kubeadmin
-          password: "{{ lookup('file', '{{ cluster_path }}/{{ install_path }}/auth/kubeadmin-password') }}"
+          password: "{{ kube_pass }}"
           validate_certs: no
         register: k8s_auth_results
         tags:
-          - always
+          - gitops_operator
+          - gitops_applications
+          - get_co
 
       - name: get unique cluster identifier
         shell: >-
@@ -40,14 +42,18 @@
           | grep worker | cut -d- -f1-3
         register: cluster_id
         tags:
-          - always
+          - gitops_operator
+          - gitops_applications
+          - get_co
         when: k8s_auth_results.k8s_auth.api_key is defined
 
       - name: set unique_cluster_id fact
         set_fact: 
          openshift_unique_cluster_name: "{{ cluster_id.stdout }}"
         tags:
-          - always
+          - gitops_operator
+          - gitops_applications
+          - get_co
         when: k8s_auth_results.k8s_auth.api_key is defined
 
       - name: ipi install
@@ -57,117 +63,12 @@
           - never
           - ipi_install
 
-      - name: configure cert_replace
+      - name: Deploy openshift gitops operator
         import_role:
-          name: cert_replace
+          name: gitops_operator
         tags:
           - never
-          - cert_replace
-
-      - name: configure infra nodes
-        import_role:
-          name: infranodes
-        tags:
-          - never
-          - infranodes
-
-      - name: configure TLS 1.2 ciphers
-        import_role:
-          name: ciphers
-        tags:
-          - never
-          - ciphers
-
-      - name: configure machine healthchecks
-        import_role:
-          name: machine_healthchecks
-        tags:
-          - never
-          - machine_healthchecks
-
-      - name: move ingress router to infra nodes
-        import_role:
-          name: mv_ingress_infra
-        tags:
-          - never
-          - mv_ingress_infra
-
-      - name: configure vsphere_storageclass
-        import_role:
-          name: vsphere_storageclass
-        tags:
-          - never
-          - vsphere_storageclass
-
-      - name: configure chronyd
-        import_role:
-          name: chronyd
-        tags:
-          - never
-          - chronyd
-
-      - name: configure etcd backups
-        import_role:
-          name: etcd_backups
-        tags:
-          - never
-          - etcd_backups
-
-      - name: configure monitoring
-        import_role:
-          name: monitoring
-        tags:
-          - never
-          - monitoring
-
-      - name: configure logging
-        import_role:
-          name: logging
-        tags:
-          - never
-          - logging
-
-      - name: configure RBAC
-        import_role:
-          name: rbac
-        tags:
-          - never
-          - rbac
-
-      - name: configure Egress
-        import_role:
-          name: egress_rules
-        tags:
-          - never
-          - egress_rules
-
-      - name: configure file integrity operator
-        import_role:
-          name: file_integrity
-        tags:
-          - never
-          - file_integrity
-
-      - name: configure compliance operator
-        import_role:
-          name: compliance
-        tags:
-          - never
-          - compliance
-
-      - name: configure ldap
-        import_role:
-          name: ldap
-        tags:
-          - never
-          - ldap
-
-      - name: configure image policy
-        import_role:
-          name: image_policy
-        tags:
-          - never
-          - image_policy
+          - gitops_operator 
 
       - name: Deploy get co 
         import_role:
@@ -175,49 +76,6 @@
         tags:
           - never
           - get_co
-
-      - name: configure additional nic
-        import_role:
-          name: additional_nic
-        tags:
-          - never
-          - additional_nic
-
-      - name: configure object pruning
-        import_role:
-          name: object_prune
-        tags:
-          - never
-          - object_prune
-          
-      - name: configure image registry
-        import_role:
-          name: internal_image_registry
-        tags:
-          - never
-          - internal_image_registry
-
-      - name: manage project template
-        import_role:
-          name: default_project_template
-        tags:
-          - never
-          - default_project_template
-
-      - name: configure custom TLS certs
-        import_role:
-          name: custom_certs
-        tags:
-          - never
-          - custom_certs
-
-      - name: configure external_registry
-        import_role:
-          name: external_registry
-        tags:
-          - never
-          - external_registry
-
 
     always:
       # Putting this in an always block ensures the sensitive information is always removed
@@ -230,9 +88,6 @@
         api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
         validate_certs: no
       tags:
-        - always
-
-  handlers:
-    - name: wait for rollout to start
-      wait_for:
-        timeout: 30
+        - gitops_operator
+        - gitops_applications
+        - get_co
