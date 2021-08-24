@@ -32,6 +32,7 @@
           - gitops_applications
           - get_co
           - infranodes
+          - tmpl_mvingressinfra
 
       - name: get unique cluster identifier
         shell: >-
@@ -47,6 +48,7 @@
           - gitops_applications
           - get_co
           - infranodes
+          - tmpl_mvingressinfra
         when: k8s_auth_results.k8s_auth.api_key is defined
 
       - name: set unique_cluster_id fact
@@ -57,6 +59,7 @@
           - gitops_applications
           - get_co
           - infranodes
+          - tmpl_mvingressinfra
         when: k8s_auth_results.k8s_auth.api_key is defined
 
       - name: ipi install
@@ -80,6 +83,13 @@
           - never
           - get_co
 
+      - name: Create manifests move ingress to infra nodes
+        import_role:
+          name:tmpl_mvingressinfra
+        tags:
+          - never
+          - tmpl_mvingressinfra
+
     always:
       # Putting this in an always block ensures the sensitive information is always removed
       # The tags on this should include all configuration roles
@@ -95,3 +105,4 @@
         - gitops_applications
         - get_co
         - infranodes
+        - tmpl_mvingressinfra

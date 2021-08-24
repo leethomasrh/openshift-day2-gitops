@@ -1,0 +1,4 @@
+- name: create move ingress to infra template
+  template:
+    src: ingresspatch.j2
+    dest: {{ argo_template_path }}/{{ argo_app_dir }}

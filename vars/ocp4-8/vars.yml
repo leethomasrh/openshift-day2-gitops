@@ -5,6 +5,7 @@ ansible_python_interpreter: python
 num_retries: 30
 num_delay: 30
 vault_pass_file: "{{ playbook_dir }}/vault-pass.txt"
+argo_template_path: /c/Users/lthom528/projects
 
 # Cluster operations namespace - used for ldap and object pruning
 operation_namespace: cluster-ops
@@ -93,6 +94,9 @@ infranodes_memory: 49152
 infranodes_cpu: 8
 infranodes_cores_per_socket: 1
 infranodes_template: "{{ openshift_unique_cluster_name }}-rhcos"
+
+#Move Ingress to Infra
+argo_app_dir: ocp-moveingressinfra
 
 #LDAP
 #Note: The LDAP role does not create role bindings so in order to access the cluster the RBAC role will need to be run as well.
