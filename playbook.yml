@@ -39,7 +39,7 @@
           --token {{ k8s_auth_results.k8s_auth.api_key }}
           --insecure-skip-tls-verify=true
           --server=https://api.{{ cluster_name }}.{{ openshift_base_domain }}:6443
-          | grep worker | cut -d- -f1-3
+          | grep worker | cut -d- -f1-2
         register: cluster_id
         tags:
           - gitops_operator
