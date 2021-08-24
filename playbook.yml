@@ -18,19 +18,20 @@
       host: https://api.{{ cluster_name }}.{{ openshift_base_domain }}:6443
   vars_files:
     - "{{ playbook_dir }}/vars/{{ cluster_name }}/vars.yml"
-    - "{{ playbook_dir }}/vars/{{ cluster_name }}/vault.yml"
+#    - "{{ playbook_dir }}/vars/{{ cluster_name }}/vault.yml"
   tasks:
   - block:
       - name: Login
         k8s_auth:
-          username: kubeadmin
-          password: "{{ kube_pass }}"
+          username: rh
+          password: RedHat##
           validate_certs: no
         register: k8s_auth_results
         tags:
           - gitops_operator
           - gitops_applications
           - get_co
+          - infranodes
 
       - name: get unique cluster identifier
         shell: >-
@@ -45,6 +46,7 @@
           - gitops_operator
           - gitops_applications
           - get_co
+          - infranodes
         when: k8s_auth_results.k8s_auth.api_key is defined
 
       - name: set unique_cluster_id fact
@@ -54,6 +56,7 @@
           - gitops_operator
           - gitops_applications
           - get_co
+          - infranodes
         when: k8s_auth_results.k8s_auth.api_key is defined
 
       - name: ipi install
@@ -91,3 +94,4 @@
         - gitops_operator
         - gitops_applications
         - get_co
+        - infranodes
