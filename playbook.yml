@@ -32,7 +32,6 @@
           - gitops_applications
           - get_co
           - infranodes
-          - tmpl_mvingressinfra
 
       - name: get unique cluster identifier
         shell: >-
@@ -48,7 +47,6 @@
           - gitops_applications
           - get_co
           - infranodes
-          - tmpl_mvingressinfra
         when: k8s_auth_results.k8s_auth.api_key is defined
 
       - name: set unique_cluster_id fact
@@ -59,7 +57,6 @@
           - gitops_applications
           - get_co
           - infranodes
-          - tmpl_mvingressinfra
         when: k8s_auth_results.k8s_auth.api_key is defined
 
       - name: ipi install
@@ -85,7 +82,7 @@
 
       - name: Create manifests move ingress to infra nodes
         import_role:
-          name:tmpl_mvingressinfra
+          name: tmpl_mvingressinfra
         tags:
           - never
           - tmpl_mvingressinfra
@@ -105,4 +102,3 @@
         - gitops_applications
         - get_co
         - infranodes
-        - tmpl_mvingressinfra

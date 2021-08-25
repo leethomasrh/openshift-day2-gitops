@@ -1,4 +1,14 @@
+- name: ensure destination folder exists
+  file:
+    path: "{{ argo_template_path }}/{{ argo_app_dir }}"
+    state: directory
+
 - name: create move ingress to infra template
   template:
     src: ingresspatch.j2
-    dest: {{ argo_template_path }}/{{ argo_app_dir }}
+    dest: "{{ argo_template_path }}/{{ argo_app_dir }}/ingresspatch.yaml"
+
+- name: create move ingress to infra template
+  template:
+    src: kustomization.j2
+    dest: "{{ argo_template_path }}/{{ argo_app_dir }}/kustomization.yaml"
